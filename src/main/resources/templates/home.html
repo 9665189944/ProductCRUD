@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-sequrity">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Welcome <span sec:authentication="principal.username"></span></h1>
+<div sec:authorize="hasRole('VENDOR')">
+<a href ="addproduct"><button class="btn btn-primary">ADD NEW BOOK</button></a>
+</div>
+    <hr>
+<table border="2">
+    <tr>
+        <th>product id</th>
+        <th>product Name</th>
+        <th>product Price</th>
+        <th>Action</th>
+    </tr>
+    <tr th:each="product:${products}">
+        <td th:text="${product.productID}"></td>
+        <td th:text="${product.productName}"></td>
+        <td th:text="${product.productPrice}"></td>
+        <td sec:authorize="hasRole('ADMIN')"> <a th:href="@{/deleteproduct/{id}(id=${product.productID})}"><button class="btn btn-danger">DELETE</button></a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
